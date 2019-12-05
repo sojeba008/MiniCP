@@ -53,7 +53,7 @@ public class Maximum extends AbstractConstraint {
         }
         y.propagateOnBoundChange(this);
 //        y.propagateOnBind(this);
-         throw new NotImplementedException("Maximum");
+//         throw new NotImplementedException("Maximum");
     }
 
 

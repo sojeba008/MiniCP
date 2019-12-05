@@ -34,7 +34,7 @@ import minicp.state.Trail;
  */
 public class DFSearch {
 
-//    private Trailer trail = new Trailer();
+    //    private Trailer trail = new Trailer();
     private Trailer trail = new Trailer();
     private Supplier<Procedure[]> branching;
     private StateManager sm;
@@ -91,7 +91,7 @@ public class DFSearch {
 
     private SearchStatistics solve(SearchStatistics statistics, Predicate<SearchStatistics> limit) {
         sm.withNewState(() -> {
-            System.out.println("zeeeebi");
+//            System.out.println("zeeeebi");
             try {
                 dfs(statistics, limit);
                 statistics.setCompleted();
@@ -222,7 +222,7 @@ public class DFSearch {
     }
 
     Stack<Integer> levelStack = new Stack<>();
-    private void dfsold(SearchStatistics statistics, Predicate<SearchStatistics> limit) {
+    private void dfsOld(SearchStatistics statistics, Predicate<SearchStatistics> limit) {
         if (limit.test(statistics))
             throw new StopSearchException();
 
@@ -234,404 +234,115 @@ public class DFSearch {
             notifySolution();
         } else {
             for (Procedure b : branches) {
-                System.out.println("State 1 "+levelStack);
+//                System.out.println("State 1 "+levelStack);
                 sm.saveState();
                 levelStack.push(levelStack.size()+1);
-                    System.out.println("State 2 "+levelStack);
-                    try {
-                        statistics.incrNodes();
-                        b.call();
-                        dfs(statistics, limit);
-                    } catch (InconsistencyException e) {
-                        statistics.incrFailures();
-                        notifyFailure();
-                    }
+//                    System.out.println("State 2 "+levelStack);
+                try {
+                    statistics.incrNodes();
+                    b.call();
+                    dfs(statistics, limit);
+                } catch (InconsistencyException e) {
+                    statistics.incrFailures();
+                    notifyFailure();
+                }
                 sm.restoreState();
-                    levelStack.pop();
+                levelStack.pop();
 //                System.out.println(sm.getLevel());
             }
         }
     }
 
-//    private void dfs(SearchStatistics statistics, Predicate<SearchStatistics> limit) {
-//        System.out.println("My baby");
-//        Stack<Procedure> alternativeBranches = new Stack<>();
-//        Stack<Integer> levelStack = new Stack<>();
-//
-//        Procedure[] branches;
-//            if (limit.test(statistics))
-//                throw new StopSearchException();
-//             branches = branching.get();
-//
-//            if (branches.length > 0){
-//                sm.saveState();
-////                System.out.println("Etat "+sm.getLevel());
-//                for (Procedure b : branches) {
-//                    alternativeBranches.push(b);
-//                    levelStack.push(levelStack.size()+1);
-//                    statistics.incrNodes();
-//                }
-//
-//                try {
-//                    alternativeBranches.peek().call();
-//                } catch (InconsistencyException e) {
-//                    notifyFailure();
-//                    statistics.incrFailures();
-//                }
-//                System.out.println("At "+levelStack);
-//            }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//                 if (limit.test(statistics))
-//                throw new StopSearchException();
-//             branches = branching.get();
-//
-//            if (branches.length > 0){
-//                sm.saveState();
-////                System.out.println("Etat "+sm.getLevel());
-//                for (Procedure b : branches) {
-//                    alternativeBranches.push(b);
-//                    levelStack.push(levelStack.size()+1);
-//                    statistics.incrNodes();
-//                }
-//
-//                try {
-//                    alternativeBranches.peek().call();
-//                } catch (InconsistencyException e) {
-//                    notifyFailure();
-//                    statistics.incrFailures();
-//                }
-//                System.out.println("At "+levelStack);
-//            }
-//
-//
-//
-//
-//
-//
-//                 if (limit.test(statistics))
-//                throw new StopSearchException();
-//             branches = branching.get();
-//
-//            if (branches.length > 0){
-//                sm.saveState();
-//                for (Procedure b : branches) {
-//                    alternativeBranches.push(b);
-//                    levelStack.push(levelStack.size()+1);
-//                    statistics.incrNodes();
-//                }
-//
-//                try {
-//                    alternativeBranches.peek().call();
-//                } catch (InconsistencyException e) {
-//                    notifyFailure();
-//                    statistics.incrFailures();
-//                }
-//            }
-//
-//
-//
-//
-//
-//
-//
-//                 if (limit.test(statistics))
-//                throw new StopSearchException();
-//             branches = branching.get();
-//
-//            if (branches.length > 0){
-//                sm.saveState();
-////                System.out.println("Etat "+sm.getLevel());
-//                for (Procedure b : branches) {
-//                    alternativeBranches.push(b);
-//                    levelStack.push(levelStack.size()+1);
-//                    statistics.incrNodes();
-//                }
-//
-//                try {
-//                    alternativeBranches.peek().call();
-//                } catch (InconsistencyException e) {
-//                    notifyFailure();
-//                    statistics.incrFailures();
-//                }
-//                System.out.println("At "+levelStack);
-//            }
-//
-//
-//
-//
-//
-//
-//        branches = branching.get();
-//        if (limit.test(statistics))
-//            throw new StopSearchException();
-//
-//
-//        if (branches.length > 0){
-//
-////                System.out.println("Etat "+sm.getLevel());
-//            for (Procedure b : branches) {
-//                alternativeBranches.push(b);
-//                levelStack.push(levelStack.size()+1);
-//                statistics.incrNodes();
-//            }
-//            sm.saveState();
-//
-//            try {
-//                alternativeBranches.peek().call();
-//            } catch (InconsistencyException e) {
-//                notifyFailure();
-//                statistics.incrFailures();
-//            }
-//            System.out.println("At "+levelStack);
-//        }
-//        else  {
-//
-//            System.out.println("At "+levelStack);
-//            alternativeBranches.pop();
-//            levelStack.pop();
-//            statistics.incrSolutions();
-//            System.out.println("After BT" +levelStack);
-//
-//            notifySolution();
-//            sm.restoreState();
-//            try {
-//                Thread.sleep(100);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-////        System.out.println("After BT" +levelStack+" "+sm.getLevel());
-////
-////
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//        branches = branching.get();
-//        if (limit.test(statistics))
-//            throw new StopSearchException();
-//
-//        System.out.println("Comment ca "+branches.length);
-//
-//        if (branches.length > 2){
-//
-////                System.out.println("Etat "+sm.getLevel());
-//            for (Procedure b : branches) {
-//                alternativeBranches.push(b);
-//                levelStack.push(levelStack.size()+1);
-//                statistics.incrNodes();
-//            }
-//            sm.saveState();
-//
-//            try {
-//                alternativeBranches.peek().call();
-//            } catch (InconsistencyException e) {
-//                notifyFailure();
-//                statistics.incrFailures();
-//            }
-//            System.out.println("At "+levelStack);
-//        }
-//        else  {
-//
-//            System.out.println("At "+levelStack);
-//            alternativeBranches.pop();
-//            levelStack.pop();
-//            statistics.incrSolutions();
-//            System.out.println("After BT" +levelStack);
-//
-//            notifySolution();
-//            sm.restoreState();
-//            try {
-//                Thread.sleep(100);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        branches = branching.get();
-//        if (limit.test(statistics))
-//            throw new StopSearchException();
-//
-//        System.out.println("Comment ca "+branches.length);
-//
-//        if (branches.length > 2){
-//
-////                System.out.println("Etat "+sm.getLevel());
-//            for (Procedure b : branches) {
-//                alternativeBranches.push(b);
-//                levelStack.push(levelStack.size()+1);
-//                statistics.incrNodes();
-//            }
-//            sm.saveState();
-//
-//            try {
-//                alternativeBranches.peek().call();
-//            } catch (InconsistencyException e) {
-//                notifyFailure();
-//                statistics.incrFailures();
-//            }
-//            System.out.println("At "+levelStack);
-//        }
-//        else  {
-//
-//            System.out.println("At "+levelStack);
-//            alternativeBranches.pop();
-//            levelStack.pop();
-//            statistics.incrSolutions();
-//            System.out.println("After BT" +levelStack);
-//
-//            notifySolution();
-//            sm.restoreState();
-//            try {
-//                Thread.sleep(100);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        System.out.println("end" +levelStack+" "+sm.getLevel());
-//
-//
-//
-//
-//
-//
-//    }
- private void dfs(SearchStatistics statistics, Predicate<SearchStatistics> limit) {
-        System.out.println("My baby");
-        Stack<Procedure> alternativeBranches = new Stack<>();
-        Stack<Integer> levelStack = new Stack<>();
 
-        Procedure[] branches;
-        do {
+
+    private void dfs(SearchStatistics statistics, Predicate<SearchStatistics> limit) {
+        // create stacks
+        Stack<Procedure[]> stack = new Stack<>();
+        Stack<Integer> indices = new Stack<>();
+        // add base index
+        indices.push(0);
+
+        // get first alternatives
+        Procedure[] alternatives = branching.get();
+        // and add it to the stack
+        stack.push(alternatives);
+
+        // while queue is not empty
+        while (!(stack.isEmpty())) {
             if (limit.test(statistics))
                 throw new StopSearchException();
-             branches = branching.get();
 
-            if (branches.length > 0){
-                sm.saveState();
-                System.out.println("Etat "+sm.getLevel());
-                for (Procedure b : branches) {
-                    alternativeBranches.push(b);
-                    levelStack.push(levelStack.size()+1);
-                    statistics.incrNodes();
-//                    break;
-                }
+            // look to the top of the alternatives stack
+            alternatives = stack.peek();
+            // look and destroy last index
+            int index = indices.pop();
 
+            // if no more alternatives
+            // we have a solution
+            if (alternatives.length == 0) {
+                // destroy last alternatives
+                stack.pop();
+                // increase solutions count
+                statistics.incrSolutions();				// notify the listeners that a solution has been found
+                notifySolution();
+                // go up in the tree
+                sm.restoreState();
+            } else {
                 try {
-                    alternativeBranches.peek().call();
-//                    levelStack.push(levelStack.size()+1);
-//                    branches = branching.get();
-//                    System.out.println("lvl ichi "+branches.length);
+                    //AKOBA ZONE
+                    // or == (for safety)
+                    // test for backtrack
+                    if (alternatives.length <= index) {
+                        // destroy last alternatives
+                        stack.pop();
+
+                        // if no more alternatives
+                        // why continue loop ?
+                        if (stack.isEmpty())
+                            break;
+
+                        // go up
+                        sm.restoreState();
+
+//						if(!stack.isEmpty())
+//							state.pop();
+
+                    } else {
+                        // go down
+                        sm.saveState();
+                        // call current alternative
+                        // which is selected thanks to the
+                        // index saved
+                        alternatives[index].call(); // throws InconsistencyException
+                        // update the alternatives
+                        // by calling another time
+                        alternatives = branching.get();
+
+                        // add the new alternatives
+                        stack.push(alternatives);
+
+                        // increase the nodes count
+                        statistics.incrNodes();
+
+                        // update the current index
+                        // and add it
+                        indices.push(index + 1);
+                        // add one more index
+                        // which is used for the next alternatives
+                        indices.push(0);
+                    }
                 } catch (InconsistencyException e) {
+                    // notify the listeners that we encountered
+                    // a failure
                     notifyFailure();
+                    // increase the failures count
                     statistics.incrFailures();
+                    // go up in tree
+                    sm.restoreState();
                 }
             }
-            else  {
-
-                System.out.println("At "+levelStack);
-                alternativeBranches.pop();
-                levelStack.pop();
-                statistics.incrSolutions();
-                System.out.println("After BT" +levelStack);
-
-                notifySolution();
-//                sm.restoreState();
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("Etat moins "+sm.getLevel());
-                 }
-                 sm.saveState();
         }
-        while ((alternativeBranches.size()!=0));
-//        branches = branching.get();
-//        System.out.println(branches.length);
     }
-
-
-
-
-//
-//    private void dfs(SearchStatistics statistics, Predicate<SearchStatistics> limit) {
-//        System.out.println("My baby");
-//
-//        Stack<Procedure> brancheStack = new Stack<>();
-//        Stack<Integer> levelStack = new Stack<>();
-//        Procedure current;
-//        Boolean finished=false;
-//        while (!finished) {
-//
-//            if (limit.test(statistics))
-//                throw new StopSearchException();
-//
-//            Procedure[] branches = branching.get();
-//            System.out.println(branches.length);
-//
-//            if (branches.length > 0){
-//                trail.saveState();
-//
-////                sm.saveState();
-////                levelStack.push(branches.length);
-//                for (Procedure b : branches) {
-//                    brancheStack.push(b);
-//                    statistics.incrNodes();
-//                }
-//
-//
-//                current=brancheStack.peek();
-//                try {
-//                    current.call();
-//                    branches = branching.get();
-//                    System.out.println("lvl ichi "+branches.length);
-//                } catch (InconsistencyException e) {
-//                    notifyFailure();
-//                    statistics.incrFailures();
-//                }
-//
-//
-//            }
-//            else  {
-//                trail.restoreState();
-//
-////                sm.restoreState();
-//                brancheStack.pop();
-//                statistics.incrSolutions();
-//                notifySolution();
-//                trail.saveState();
-////                sm.saveState();
-//            }
-//
-//
-//            if(brancheStack.isEmpty()) finished=true;
-//        }
-//
-////        System.out.println(levelStack);
-//    }
 
 
 
