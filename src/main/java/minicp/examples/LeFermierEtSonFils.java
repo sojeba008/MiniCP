@@ -34,17 +34,25 @@ public class LeFermierEtSonFils {
     public static void main(String[] args) {
         int n = 4;
         Solver cp = Factory.makeSolver(false);
-        IntVar [] q = new IntVar[n];
-        q[0] = Factory.makeIntVar(cp, 1, 170);
-        q[1] = Factory.makeIntVar(cp, 1, 17);
-        q[2] = Factory.makeIntVar(cp, 1, 9);
-        q[3] = Factory.makeIntVar(cp, 200, 200);
-
-        System.out.println(q[3]);
+        IntVar  nbPoussin=Factory.makeIntVar(cp, 1, 98);
+        IntVar  nbCochon=Factory.makeIntVar(cp, 1, 98);
+        IntVar  nbBoeuf=Factory.makeIntVar(cp, 1, 98);
+        IntVar  budget=Factory.makeIntVar(cp, 200, 200);
 
 
-        cp.post(Factory.lessOrEqual(Factory.sum(Factory.mul(q[0],1),Factory.mul(q[1],10),Factory.mul(q[2],20)),q[3]));
-        cp.post(Factory.largerOrEqual(Factory.sum(Factory.mul(q[0],1),Factory.mul(q[1],10),Factory.mul(q[2],20)),q[3]));
+        cp.post(Factory.lessOrEqual(Factory.sum(Factory.mul(nbPoussin,1),Factory.mul(nbCochon,10),Factory.mul(nbBoeuf,20)),budget));
+        cp.post(Factory.largerOrEqual(Factory.sum(Factory.mul(nbPoussin,1),Factory.mul(nbCochon,10),Factory.mul(nbBoeuf,20)),budget));
+
+
+        IntVar[]  q = new IntVar[3];
+
+        q[0]=nbPoussin;
+        q[1]=nbCochon;
+        q[2]=nbBoeuf;
+
+
+        System.out.println(q);
+
 
 //        DFSearch search = makeDfs(cp,firstFail(q));
         DFSearch search = Factory.makeDfs(cp, () -> {

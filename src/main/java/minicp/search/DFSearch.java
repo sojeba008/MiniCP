@@ -222,7 +222,7 @@ public class DFSearch {
     }
 
     Stack<Integer> levelStack = new Stack<>();
-    private void dfsOld(SearchStatistics statistics, Predicate<SearchStatistics> limit) {
+    private void dfs(SearchStatistics statistics, Predicate<SearchStatistics> limit) {
         if (limit.test(statistics))
             throw new StopSearchException();
 
@@ -255,7 +255,7 @@ public class DFSearch {
 
 
 
-    private void dfs(SearchStatistics statistics, Predicate<SearchStatistics> limit) {
+    private void dfsold(SearchStatistics statistics, Predicate<SearchStatistics> limit) {
         // create stacks
         Stack<Procedure[]> stack = new Stack<>();
         Stack<Integer> indices = new Stack<>();

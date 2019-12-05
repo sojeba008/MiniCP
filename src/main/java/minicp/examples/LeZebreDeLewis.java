@@ -37,17 +37,17 @@ public class LeZebreDeLewis {
         int T=1000;
         int P=250;
         Solver cp = Factory.makeSolver(false);
-        IntVar [] N = new IntVar[n];
-        IntVar [] C = new IntVar[n];
-        IntVar [] B = new IntVar[n];
-        IntVar [] S = new IntVar[n];
-        IntVar [] A = new IntVar[n];
+        IntVar [] N = new IntVar[n];  //{Espagnol Ukrainien Japonais Norvegien Anglais}
+        IntVar [] C = new IntVar[n];  //{Rouge Verte Jaune Bleu Blanche}
+        IntVar [] A = new IntVar[n];  //{Chien Renard Escargot Cheval Zebre}
+        IntVar [] B = new IntVar[n];  //{Lait Café Thé Vin Eau}
+        IntVar [] S = new IntVar[n];  //{Kools Cravens Gitanes Chesterfields OldGolds}
 
         IntVar [] Const = new IntVar[3];
-        Const[0] = Factory.makeIntVar(cp,1,1);
-        Const[1] = Factory.makeIntVar(cp,2,2);
-        Const[2] = Factory.makeIntVar(cp,3,3);
-
+        Const[0] = Factory.makeIntVar(cp,0,0);
+        Const[1] = Factory.makeIntVar(cp,1,1);
+        Const[2] = Factory.makeIntVar(cp,2,2);
+        System.out.println(Const[2]);
         for(int i=0;i<n;i++){
             N[i] = Factory.makeIntVar(cp, 0,4);
             C[i] = Factory.makeIntVar(cp, 0,4);
@@ -66,41 +66,49 @@ public class LeZebreDeLewis {
         }
 
 
-
+            //N3=0
         cp.post(Factory.lessOrEqual(N[3],Const[0]));
         cp.post(Factory.largerOrEqual(N[3],Const[0]));
-
+            //C3=1
         cp.post(Factory.lessOrEqual(C[3],Const[1]));
         cp.post(Factory.largerOrEqual(C[3],Const[1]));
-
+            //B0=2
         cp.post(Factory.lessOrEqual(B[0],Const[2]));
         cp.post(Factory.largerOrEqual(B[0],Const[2]));
 
-
+            //N4=C0
         cp.post(Factory.Equal(N[4],C[0]));
-//        cp.post(Factory.Equal(N[4],C[0]));
+            //C1=B1
         cp.post(Factory.Equal(C[1],B[1]));
+            //C2=S0
         cp.post(Factory.Equal(C[2],S[0]));
+            //C4=C1+1
         cp.post(Factory.Equal(C[4],Factory.plus(C[1], 1)));
+            //N0=A0
         cp.post(Factory.Equal(N[0],A[0]));
+            //N1=B2
         cp.post(Factory.Equal(N[1],B[2]));
+            //N2=S1
         cp.post(Factory.Equal(N[2],S[1]));
+            //S4=A2
         cp.post(Factory.Equal(S[4],A[2]));
-        cp.post(Factory.Equal(Factory.minus(S[2],1),B[3]));
-        cp.post(Factory.Equal(Factory.minus(S[3],1),A[1]));
+            //S3+/-1=A[1]
+        cp.post(Factory.Equal(Factory.minus(S[3],1),B[1]));
+            //S0+/-1=A1
+        cp.post(Factory.Equal(Factory.plus(S[0],1),A[3]));
 
-        System.out.println("eee");
 
 
 
         IntVar [] q = new IntVar[n*n];
 
+//        Factory.abs()
 
         System.arraycopy(N,0,q,0,N.length);
         System.arraycopy(C,0,q,5,C.length);
-        System.arraycopy(B,0,q,10,B.length);
-        System.arraycopy(S,0,q,15,S.length);
-        System.arraycopy(A,0,q,20,A.length);
+        System.arraycopy(A,0,q,10,A.length);
+        System.arraycopy(B,0,q,15,B.length);
+        System.arraycopy(S,0,q,20,S.length);
 
 
 
