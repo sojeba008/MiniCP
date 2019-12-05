@@ -5,8 +5,8 @@ This solver was forked from https://www.info.ucl.ac.be/~pschaus/minicp
 # Edited files
 - Constraints
   - IsLessOrEqual
-  - Not Equal
-  
+  - IsLessOrEqualVar
+  - Maximum
  - Search
    - DFSearch
   
