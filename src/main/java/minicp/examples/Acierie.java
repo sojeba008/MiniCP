@@ -57,8 +57,6 @@ public class Acierie {
 
 
         DFSearch dfs = makeDfs(cp, firstFail(q));
-//        SearchStatistics stats = dfs.solve(statistics -> statistics.numberOfSolutions() == 1000);
-//        stats = dfs.optimize(obj);
 
         dfs.onSolution(() ->
                 System.out.println("solution:" + Arrays.toString(q)+" with objective:" + fonction.min())
